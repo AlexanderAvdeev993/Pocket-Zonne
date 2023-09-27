@@ -12,9 +12,7 @@ public class Player : Entity
     private Rigidbody2D _rb;
     private bool facingRight = true;
     private Weapon _weapon;
-    [SerializeField] Transform _hpBar;
     
-
 
     private void Awake()
     {    
@@ -24,9 +22,11 @@ public class Player : Entity
         _weapon = GetComponentInChildren<Weapon>();
 
         _inputSystem.Player.Move.performed += context => _moveInput = context.ReadValue<Vector2>();
-        _inputSystem.Player.Move.canceled += context => _moveInput = Vector2.zero;
-        
+        _inputSystem.Player.Move.canceled += context => _moveInput = Vector2.zero;       
     }
+
+
+
 
     public void Attack()
     {
@@ -71,6 +71,12 @@ public class Player : Entity
         Vector2 localScale = objectToFlip.localScale;
         localScale.x *= -1;
         objectToFlip.localScale = localScale;
+    }
+
+    protected override void Die()
+    {
+        StopAttack();
+        base.Die();
     }
 
     private void Update()

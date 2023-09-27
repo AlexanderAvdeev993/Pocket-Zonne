@@ -2,7 +2,9 @@ using System;
 using UnityEngine;
 
 public class Entity : MonoBehaviour, IDamageable
-{    
+{
+    [SerializeField] protected Transform _hpBar;
+
     [Header("Stats")]   
     [SerializeField] private int _health;
     [SerializeField] protected int _speedMovement;
@@ -24,7 +26,7 @@ public class Entity : MonoBehaviour, IDamageable
     }
 
     protected virtual void Die()
-    {
+    {         
         Debug.Log("Die");
     }
 }
