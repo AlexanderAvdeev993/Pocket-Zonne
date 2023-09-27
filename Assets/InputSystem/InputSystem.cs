@@ -57,7 +57,7 @@ public partial class @InputSystem: IInputActionCollection2, IDisposable
             ""actions"": [
                 {
                     ""name"": ""Click"",
-                    ""type"": ""PassThrough"",
+                    ""type"": ""Button"",
                     ""id"": ""d9e2d37c-4fd0-4fd3-9fbf-d1daaf02e1b1"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",

@@ -3,11 +3,11 @@ using UnityEngine;
 
 public class Entity : MonoBehaviour, IDamageable
 {    
-    [Header("Stats")]
-    [SerializeField] private int _damage;
-    [SerializeField] private int _speedAttack;
+    [Header("Stats")]   
     [SerializeField] private int _health;
     [SerializeField] protected int _speedMovement;
+
+    public int Health => _health;
 
     public event Action<int> OnTakeDamage;
 

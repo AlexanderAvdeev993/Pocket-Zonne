@@ -193,8 +193,8 @@ MonoBehaviour:
   m_SubmitAction: {fileID: 0}
   m_CancelAction: {fileID: 0}
   m_LeftClickAction: {fileID: 8264381471079079517, guid: 65cbc7a6b39b1a142830a14c5bb6550b, type: 3}
-  m_MiddleClickAction: {fileID: 8264381471079079517, guid: 65cbc7a6b39b1a142830a14c5bb6550b, type: 3}
-  m_RightClickAction: {fileID: 8264381471079079517, guid: 65cbc7a6b39b1a142830a14c5bb6550b, type: 3}
+  m_MiddleClickAction: {fileID: 0}
+  m_RightClickAction: {fileID: 0}
   m_ScrollWheelAction: {fileID: 0}
   m_TrackedDevicePositionAction: {fileID: 0}
   m_TrackedDeviceOrientationAction: {fileID: 0}
@@ -285,6 +285,17 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1520545642 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7497293002410387874, guid: 9d1c6f16b064495418ae1087522d1459, type: 3}
+  m_PrefabInstance: {fileID: 6831760736699823124}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5e4a61fb89ba3354bbd5431942dcd366, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &6831760736699823124
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -292,6 +303,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 7491491, guid: 9d1c6f16b064495418ae1087522d1459, type: 3}
+      propertyPath: _speedAttack
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 1642117975003943902, guid: 9d1c6f16b064495418ae1087522d1459, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4950538547532189800, guid: 9d1c6f16b064495418ae1087522d1459, type: 3}
       propertyPath: m_RootOrder
       value: 2
@@ -406,6 +425,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 538775737, guid: d4063481a0a73f0468faca6e5b186a1b, type: 3}
+      propertyPath: m_Delegates.Array.data[0].callback.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1520545642}
+    - target: {fileID: 538775737, guid: d4063481a0a73f0468faca6e5b186a1b, type: 3}
+      propertyPath: m_Delegates.Array.data[1].callback.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1520545642}
     - target: {fileID: 7956227079889018286, guid: d4063481a0a73f0468faca6e5b186a1b, type: 3}
       propertyPath: m_Name
       value: Canvas
