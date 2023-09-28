@@ -1,18 +1,28 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Zenject;
 
 public class EnemyFactory : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    [SerializeField] private SpawnPoint[] spawnPoints;
+    private DiContainer _diContainer;
+
+    [Inject]
+    private void Construct(DiContainer diContainer)
     {
-        
+        _diContainer = diContainer;
     }
 
-    // Update is called once per frame
-    void Update()
+    public void CreateEnemy()
     {
-        
+        foreach(SpawnPoint spawnPoint in spawnPoints)
+        {
+            Vector2 spawnPosition = spawnPoint.GetSpawnPosition();
+            Enemy enemyPrefab = spawnPoint.GetEnemyPrefab();    
+
+            Enemy enemy =
+               _diContainer.InstantiatePrefabForComponent<Enemy>(enemyPrefab, spawnPosition, Quaternion.identity, null);
+        }
     }
 }

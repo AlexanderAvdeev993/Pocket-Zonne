@@ -14,7 +14,9 @@ public class Weapon : MonoBehaviour
    
 
     public void StartAttack(Entity nearestTarget)
-    {
+    {   
+        if(nearestTarget == null) return;
+
         _token = new CancellationTokenSource();
         _ = Shot(nearestTarget);
     }
@@ -22,6 +24,12 @@ public class Weapon : MonoBehaviour
     {      
         while (!_token.IsCancellationRequested)
         {
+            if (nearestTarget == null)
+            {
+                StopAttack();
+                return;
+            }
+               
             Debug.Log("Attack");
             nearestTarget.TakeDamage(_damage);
 

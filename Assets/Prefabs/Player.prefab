@@ -676,9 +676,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5e4a61fb89ba3354bbd5431942dcd366, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _hpBar: {fileID: 9082811576885039205}
+  _gameplayCanvas: {fileID: 9025766233529370136}
   _health: 100
-  _speedMovement: 300
+  _speedMovement: 400
+  _detectionRadius: 5
+  _enemyLayer:
+    serializedVersion: 2
+    m_Bits: 8
 --- !u!70 &7195585774644818007
 CapsuleCollider2D:
   m_ObjectHideFlags: 0
@@ -692,8 +696,8 @@ CapsuleCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
-  m_Size: {x: 0.26, y: 0.66}
+  m_Offset: {x: 0, y: -0.18}
+  m_Size: {x: 0.18, y: 0.24}
   m_Direction: 0
 --- !u!50 &926074464
 Rigidbody2D:
@@ -810,10 +814,6 @@ PrefabInstance:
     - target: {fileID: 2028891404984694371, guid: 9f6770babb348a24ca415ff12dfaa319, type: 3}
       propertyPath: m_Name
       value: AK-74
-      objectReference: {fileID: 0}
-    - target: {fileID: 4772670039738025267, guid: 9f6770babb348a24ca415ff12dfaa319, type: 3}
-      propertyPath: m_SortingOrder
-      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 7562498304292956466, guid: 9f6770babb348a24ca415ff12dfaa319, type: 3}
       propertyPath: m_RootOrder
@@ -961,12 +961,19 @@ PrefabInstance:
       propertyPath: m_Name
       value: HP bar
       objectReference: {fileID: 0}
-    - target: {fileID: 6655923683220532912, guid: 34e2e74a72b8ac843b20c62a12344d78, type: 3}
-      propertyPath: m_FillAmount
-      value: 0.643
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 34e2e74a72b8ac843b20c62a12344d78, type: 3}
+--- !u!114 &9025766233529370136 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2675319593118724505, guid: 34e2e74a72b8ac843b20c62a12344d78, type: 3}
+  m_PrefabInstance: {fileID: 6368461985968830337}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 88b811932e32d774a94f1fe185240e94, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!224 &9082811576885039205 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 2769137003521501156, guid: 34e2e74a72b8ac843b20c62a12344d78, type: 3}

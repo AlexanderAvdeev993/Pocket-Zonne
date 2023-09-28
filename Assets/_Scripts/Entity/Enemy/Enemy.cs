@@ -1,11 +1,10 @@
 using Cysharp.Threading.Tasks;
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using System.Threading;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using Zenject;
-using Zenject.SpaceFighter;
+
 
 public class Enemy : Entity
 {
@@ -16,12 +15,11 @@ public class Enemy : Entity
 
     private Rigidbody2D _rb;
     private Player _player;
+    private CancellationTokenSource _token;
     private bool isAttack = false;
     private bool isStartAttack = false;
     private bool facingRight = true;
-    private CancellationTokenSource _token;
-    
-
+       
     [Inject]
     private void Construct(Player player)
     {
@@ -31,6 +29,7 @@ public class Enemy : Entity
     private void Awake()
     {
         _rb = GetComponent<Rigidbody2D>();
+        _gameplayCanvas.ActiveDetectionZona(false);
     }
 
     private async UniTaskVoid MoveToTargen()
@@ -63,17 +62,32 @@ public class Enemy : Entity
             }         
         }
     }
+    private void OnEnable()
+    {
+        OnTakeDamage += ProvokingAttack;
+    }
+    private void OnDisable()
+    {
+        OnTakeDamage -= ProvokingAttack;
+    }
+
+    private void ProvokingAttack(int damage)
+    {
+        isStartAttack = true;
+        MoveToTargen().Forget();
+    }
 
     private void Attack()
-    {
+    {       
+        if (_player == null) return;
         Debug.Log("Attack melle");
         _player.TakeDamage(_damage);
     }
 
     protected override void Die()
     {
-        gameObject.SetActive(false);
-        _token.Cancel();
+        _token?.Cancel();
+        gameObject.SetActive(false);      
         base.Die();
     }
 
@@ -85,9 +99,14 @@ public class Enemy : Entity
     {
         facingRight = !facingRight;
 
-        Vector2 localScale = transform.localScale;
+        FlipObject(transform);
+        FlipObject(_gameplayCanvas.transform);
+    }
+    private void FlipObject(Transform objectToFlip)
+    {
+        Vector2 localScale = objectToFlip.localScale;
         localScale.x *= -1;
-        transform.localScale = localScale;
+        objectToFlip.localScale = localScale;
     }
     private void Update()
     {   

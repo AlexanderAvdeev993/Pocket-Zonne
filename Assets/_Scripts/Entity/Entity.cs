@@ -3,16 +3,16 @@ using UnityEngine;
 
 public class Entity : MonoBehaviour, IDamageable
 {
-    [SerializeField] protected Transform _hpBar;
+    [SerializeField] protected GameplayCanvas _gameplayCanvas;
 
     [Header("Stats")]   
-    [SerializeField] private int _health;
+    [SerializeField] protected int _health;
     [SerializeField] protected int _speedMovement;
 
     public int Health => _health;
-
+    
     public event Action<int> OnTakeDamage;
-
+     
     public void TakeDamage(int damage)
     {
         _health -= damage;

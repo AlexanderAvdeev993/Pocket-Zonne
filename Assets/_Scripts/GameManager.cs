@@ -10,17 +10,19 @@ public class GameManager : MonoBehaviour
 
 
      private Player _player;
-
+     private EnemyFactory _enemyFactory;
 
     [Inject]
-    private void Construct(Player player)
+    private void Construct(Player player, EnemyFactory enemyFactory)
     {
         _player = player;
+        _enemyFactory = enemyFactory;
     }
 
     private void Start()
     {
-        ReturnPlayerToStartPos();   
+        ReturnPlayerToStartPos();
+        _enemyFactory.CreateEnemy();
     }
 
     private void ReturnPlayerToStartPos()

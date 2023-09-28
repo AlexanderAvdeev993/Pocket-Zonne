@@ -2,20 +2,33 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-public class HealthBar : MonoBehaviour
+public class GameplayCanvas : MonoBehaviour
 {
     [SerializeField] private Image _slider;
+    [SerializeField] private Image _detectionZona;
+
     private Entity _entity;
     private float _currentFillAmount;
-
 
     private void Awake()
     {
         _entity = GetComponentInParent<Entity>();
         _currentFillAmount = _entity.Health;
 
-        _slider.fillAmount = 1;
+        _slider.fillAmount = _currentFillAmount / _entity.Health;
     }
+    public void ActiveDetectionZona(bool active)
+    {
+        _detectionZona.gameObject.SetActive(active);
+    }
+
+    public void InstallationDetectionZona(float value)
+    {
+        Vector2 newScale = _detectionZona.transform.localScale;
+        newScale.x = value*2;
+        newScale.y = value*2;
+        _detectionZona.transform.localScale = newScale;
+    }   
     void OnEnable()
     {
         _entity.OnTakeDamage += ChangeHealth;
@@ -29,6 +42,4 @@ public class HealthBar : MonoBehaviour
     {
         _slider.fillAmount = currentHealth / _currentFillAmount;
     }
-
-
 }
