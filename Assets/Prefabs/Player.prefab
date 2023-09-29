@@ -678,7 +678,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _gameplayCanvas: {fileID: 9025766233529370136}
   _health: 100
-  _speedMovement: 400
+  _speedMovement: 100
   _detectionRadius: 5
   _enemyLayer:
     serializedVersion: 2

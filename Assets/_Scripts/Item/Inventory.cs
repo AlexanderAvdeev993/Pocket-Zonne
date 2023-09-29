@@ -26,7 +26,7 @@ public class Inventory : MonoBehaviour
         {              
             if(slot.item != null && slot.item.itemID == item.itemID)
             {
-                slot.amount += item._amount;
+                slot.amount += item.amount;
                 item.gameObject.SetActive(false);
                 return;
             }
@@ -36,17 +36,15 @@ public class Inventory : MonoBehaviour
             if(slot.isEmpty == true)
             {
                 slot.item = item;
-                slot.amount = item._amount;
+                slot.amount = item.amount;
+
+                slot.ChangeSprite(item.sprite);
+                
                 slot.isEmpty = false;
                 item.gameObject.SetActive(false);
                 return;
                 
             }
         }
-    }
-
-    private void Update()
-    {
-       
     }
 }

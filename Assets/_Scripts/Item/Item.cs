@@ -4,8 +4,8 @@ using UnityEngine;
 using UnityEngine.UI;
 
 public class Item : MonoBehaviour 
-{
-    public Image _image;
-    public int _amount;
+{ 
+    public Sprite sprite;
+    public int amount;
     public int itemID;
 }
