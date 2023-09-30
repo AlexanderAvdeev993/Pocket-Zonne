@@ -76,6 +76,8 @@ public class Enemy : Entity
 
     private void ProvokingAttack(int damage)
     {
+        if (isStartAttack) return;
+
         isStartAttack = true;
         MoveToTargen().Forget();
     }

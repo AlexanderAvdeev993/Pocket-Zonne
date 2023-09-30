@@ -43,7 +43,6 @@ public class Player : Entity
     }
     public void Attack()
     {   
-
         _weapon.StartAttack(EnemyDetector());
     }
     public void StopAttack()

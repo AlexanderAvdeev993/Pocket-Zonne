@@ -18,7 +18,7 @@ public class ItemFactory
     /// </summary>
     public void DropItem(Item[] itemsForDrops, Vector2 spawnPosition)  
     {
-        int randomItem = Random.Range(0, itemsForDrops.Length);
+        int randomItem = Random.Range(0, itemsForDrops.Length - 1);
 
         //if(randomItem > 0 && itemsForDrops[randomItem] != null && spawnPosition != null)
         //{

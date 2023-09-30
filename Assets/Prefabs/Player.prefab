@@ -148,7 +148,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3644303956198775663}
   m_LocalRotation: {x: -0, y: -0, z: -0.045798916, w: 0.9989507}
-  m_LocalPosition: {x: -0.09000015, y: 0.10000001, z: -0.64}
+  m_LocalPosition: {x: -0.09000015, y: 0.10000001, z: -0.046}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -400,7 +400,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5470387427069181438}
   m_LocalRotation: {x: -0, y: -0, z: 0.46383727, w: 0.88592046}
-  m_LocalPosition: {x: -0.03999996, y: -0.001000002, z: -0.62}
+  m_LocalPosition: {x: -0.03999996, y: -0.001000002, z: -0.026000023}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -959,7 +959,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6080471357717252981, guid: 34e2e74a72b8ac843b20c62a12344d78, type: 3}
       propertyPath: m_Name
-      value: HP bar
+      value: Gameplay Canvas
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 34e2e74a72b8ac843b20c62a12344d78, type: 3}

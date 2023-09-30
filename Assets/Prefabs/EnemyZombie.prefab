@@ -805,7 +805,7 @@ MonoBehaviour:
   _speedMovement: 2
   _detectionRange: 5
   _attackDistance: 2
-  _speedAttack: 45
+  _speedAttack: 30
   _damage: 10
   _itemsForDrops:
   - {fileID: 1897872755, guid: efc306541cb0d9e499252b1efcad91a8, type: 3}
