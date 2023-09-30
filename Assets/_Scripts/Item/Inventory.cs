@@ -1,8 +1,8 @@
-using System.Collections;
+
 using System.Collections.Generic;
-using Unity.VisualScripting;
+
 using UnityEngine;
-using Zenject;
+
 
 public class Inventory : MonoBehaviour 
 {  
@@ -24,9 +24,10 @@ public class Inventory : MonoBehaviour
     {
         foreach (Slot slot in slots)
         {              
-            if(slot.item != null && slot.item.itemID == item.itemID)
-            {
+            if(slot.item != null && slot.item.itemID == item.itemID && item.isStacked)
+            {                 
                 slot.amount += item.amount;
+                slot._amountText.text = slot.amount.ToString();
                 item.gameObject.SetActive(false);
                 return;
             }
@@ -38,12 +39,14 @@ public class Inventory : MonoBehaviour
                 slot.item = item;
                 slot.amount = item.amount;
 
+                if(slot.amount > 1)
+                    slot._amountText.text = item.amount.ToString(); 
+
                 slot.ChangeSprite(item.sprite);
                 
                 slot.isEmpty = false;
                 item.gameObject.SetActive(false);
-                return;
-                
+                return;          
             }
         }
     }

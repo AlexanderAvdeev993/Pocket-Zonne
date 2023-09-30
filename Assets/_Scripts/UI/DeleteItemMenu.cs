@@ -10,7 +10,7 @@ public class DeleteItemMenu : MonoBehaviour
     [SerializeField] private Button _buttonNo;
     [SerializeField] private TextMeshProUGUI _textMenuDelete;
 
-    public Slot _slot;
+    public Slot _slot; 
 
     private void Start()
     {

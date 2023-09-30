@@ -6,10 +6,9 @@ using Zenject;
 public class GameManager : MonoBehaviour
 {
     [SerializeField] private Transform _playerSpawnPoint;
+    [SerializeField] private SpawnPoint[] spawnEnemyPoints;
 
-
-
-     private Player _player;
+    private Player _player;
      private EnemyFactory _enemyFactory;
 
     [Inject]
@@ -22,7 +21,7 @@ public class GameManager : MonoBehaviour
     private void Start()
     {
         ReturnPlayerToStartPos();
-        _enemyFactory.CreateEnemy();
+        _enemyFactory.CreateEnemy(spawnEnemyPoints);
     }
 
     private void ReturnPlayerToStartPos()

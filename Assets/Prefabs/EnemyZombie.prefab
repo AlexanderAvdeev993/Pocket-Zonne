@@ -807,6 +807,11 @@ MonoBehaviour:
   _attackDistance: 2
   _speedAttack: 45
   _damage: 10
+  _itemsForDrops:
+  - {fileID: 1897872755, guid: efc306541cb0d9e499252b1efcad91a8, type: 3}
+  - {fileID: -1445194418904727669, guid: 0c8d7e509e7fd9f41825fdaa14ac0589, type: 3}
+  - {fileID: 2061443862565316450, guid: a81e4905b3fc2664e8446c1320a5463d, type: 3}
+  - {fileID: -2887507671043416854, guid: 4a63031eaee649c48abd3a56d0db820f, type: 3}
 --- !u!1001 &5905950391226146037
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class Slot : MonoBehaviour
 {
-    public Item item;
+    public Item item { get;  set; }
     public int amount;
     public DeleteItemMenu _deleteItemMenu;
 
@@ -13,6 +13,7 @@ public class Slot : MonoBehaviour
     private Image slotImage;
     private Button _button;
     private Sprite _spriteDefoult;
+    public TextMeshProUGUI _amountText;
    
    
 
@@ -38,6 +39,7 @@ public class Slot : MonoBehaviour
         amount = 0;
         isEmpty = true;
         slotImage.sprite = _spriteDefoult;
+        _amountText.text = "";
     }
     public void ChangeSprite(Sprite sprite)
     {

@@ -3,9 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using Zenject;
 
-public class EnemyFactory : MonoBehaviour
+public class EnemyFactory 
 {
-    [SerializeField] private SpawnPoint[] spawnPoints;
     private DiContainer _diContainer;
 
     [Inject]
@@ -14,7 +13,7 @@ public class EnemyFactory : MonoBehaviour
         _diContainer = diContainer;
     }
 
-    public void CreateEnemy()
+    public void CreateEnemy(SpawnPoint[] spawnPoints)
     {
         foreach(SpawnPoint spawnPoint in spawnPoints)
         {

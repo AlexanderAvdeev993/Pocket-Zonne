@@ -4,7 +4,6 @@ using Zenject;
 public class GameInstaller : MonoInstaller
 {
     [SerializeField] private Player player;
-    [SerializeField] private EnemyFactory enemyFactory;
     [SerializeField] private Canvas canvas;
     
     public override void InstallBindings()
@@ -12,6 +11,7 @@ public class GameInstaller : MonoInstaller
         BindPlayer();
         BindEnemyFactory();
         BindCanvas();
+        BindItemFactory();
     }
     private void BindCanvas()
     {
@@ -23,7 +23,14 @@ public class GameInstaller : MonoInstaller
     private void BindEnemyFactory()
     {
         Container.Bind<EnemyFactory>()
-            .FromInstance(enemyFactory)
+            .FromNew()
+            .AsSingle()
+            .NonLazy();
+    }
+    private void BindItemFactory()
+    {
+        Container.Bind<ItemFactory>()
+            .FromNew()
             .AsSingle()
             .NonLazy();
     }

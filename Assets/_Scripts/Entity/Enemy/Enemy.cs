@@ -12,6 +12,7 @@ public class Enemy : Entity
     [SerializeField] private float _attackDistance = 1f;
     [SerializeField] private float _speedAttack = 10;
     [SerializeField] private int _damage = 10;
+    [SerializeField] private Item[] _itemsForDrops;
 
     private Rigidbody2D _rb;
     private Player _player;
@@ -19,11 +20,13 @@ public class Enemy : Entity
     private bool isAttack = false;
     private bool isStartAttack = false;
     private bool facingRight = true;
+    private ItemFactory _itemFactory;
        
     [Inject]
-    private void Construct(Player player)
+    private void Construct(Player player, ItemFactory itemFactory)
     {
         _player = player;   
+        _itemFactory = itemFactory; 
     }
 
     private void Awake()
@@ -86,6 +89,7 @@ public class Enemy : Entity
 
     protected override void Die()
     {
+        _itemFactory.DropItem(_itemsForDrops, gameObject.transform.position);
         _token?.Cancel();
         gameObject.SetActive(false);      
         base.Die();
