@@ -10,8 +10,8 @@ public class Entity : MonoBehaviour, IDamageable
     [SerializeField] protected int _maxHealth;
     [SerializeField] protected int _speedMovement;
 
-    public int CurrentHealth => _currentHealth;
-    public int MaxHealth
+    public int CurrentHealth { get => _currentHealth; set => _currentHealth = value; }
+    public int MaxHealth 
     {
         get { return _maxHealth; }
         set
@@ -19,8 +19,6 @@ public class Entity : MonoBehaviour, IDamageable
             _maxHealth = Mathf.Max(value, _currentHealth);
         }
     }
-
-
     public event Action<int> OnTakeDamage;
      
     public void TakeDamage(int damage)
@@ -35,6 +33,6 @@ public class Entity : MonoBehaviour, IDamageable
         }
     }
     protected virtual void Die()
-    {                
+    {            
     }
 }

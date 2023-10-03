@@ -3,25 +3,37 @@ using System;
 using System.Collections;
 using System.Threading;
 using UnityEngine;
-
-
+using Zenject;
 
 public class Weapon : MonoBehaviour
-{
-    public Action<int> OnWasteAmmunition;
+{   
     [SerializeField] private int _damage;
     [SerializeField] private int _speedAttack;
-    [SerializeField] private int _amountAmmo;
+    [SerializeField] private int _currentAmountAmmo;
+    [SerializeField] private int _maxAmountAmmo;
     [SerializeField] private float _cooldownTime;
 
     private CancellationTokenSource _token;
-    private bool canDoAction = true;
+    private AmmoCounter _ammoCounter;
+    public bool canDoAction = true;
 
-    public int AmountAmmo { get => _amountAmmo; set => _amountAmmo = value; }
-
+    public int CurrentAmountAmmo { get => _currentAmountAmmo; set => _currentAmountAmmo = value; }
+    public int MaxAmountAmmo
+    {
+        get { return _maxAmountAmmo; }
+        set
+        {
+            _maxAmountAmmo = Mathf.Max(value, _maxAmountAmmo);
+        }
+    }
+    [Inject]
+    private void Construct(AmmoCounter ammoCounter)
+    {
+        _ammoCounter = ammoCounter;
+    }
 
     private IEnumerator ICooldown()                          // этой корутиной ограничиваю количество вызовов атаки в секунду
-    {
+    {         
         canDoAction = false;
         yield return new WaitForSeconds(_cooldownTime);
         canDoAction = true;
@@ -30,24 +42,26 @@ public class Weapon : MonoBehaviour
 
     public void StartAttack(Entity nearestTarget)
     {
+       
         if (canDoAction)
         {          
             StartCoroutine(ICooldown());
-            _token = new CancellationTokenSource();
             _ = Shot(nearestTarget);
         }           
     }
     private async UniTaskVoid Shot(Entity nearestTarget)
-    {      
+    {
+        _token = new CancellationTokenSource();
+
         while (!_token.IsCancellationRequested)
         {
-            if (nearestTarget == null || _amountAmmo == 0)
+            if (nearestTarget == null || _currentAmountAmmo == 0)
             {
-                StopAttack();
+                PauseAttack();
                 return;
             }             
-            _amountAmmo--;          
-            OnWasteAmmunition?.Invoke(_amountAmmo);
+            _currentAmountAmmo--;
+            _ammoCounter.UpdateCounter(_currentAmountAmmo);
 
             nearestTarget.TakeDamage(_damage);
 
@@ -56,9 +70,17 @@ public class Weapon : MonoBehaviour
         }
     }
     public void StopAttack()
-    {        
-        _token?.Cancel();                
+    {
+        _token?.Cancel();
+        canDoAction = false;
     }
+
+    public void PauseAttack()
+    {
+        _token?.Cancel();        
+    }
+
+  
     private double ShotDelay(float _speedAttack)
     {
         if (_damage <= 0)

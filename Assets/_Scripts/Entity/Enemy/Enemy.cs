@@ -21,7 +21,9 @@ public class Enemy : Entity
     private bool isStartAttack = false;
     private bool facingRight = true;
     private ItemFactory _itemFactory;
-       
+    
+    public event Action<Enemy> OnEnemyDie;
+
     [Inject]
     private void Construct(Player player, ItemFactory itemFactory)
     {
@@ -94,6 +96,7 @@ public class Enemy : Entity
         Debug.Log("1");
         _itemFactory.DropItem(_itemsForDrops, gameObject.transform.position);
         _token?.Cancel();
+        OnEnemyDie?.Invoke(this);
         gameObject.SetActive(false);             
     }
 

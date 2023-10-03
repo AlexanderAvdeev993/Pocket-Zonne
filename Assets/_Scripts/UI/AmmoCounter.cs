@@ -18,17 +18,9 @@ public class AmmoCounter : MonoBehaviour
     private void Awake()
     {
         _counterText = GetComponentInChildren<TextMeshProUGUI>();
-        UpdateCounter(_weapon.AmountAmmo);
+        UpdateCounter(_weapon.CurrentAmountAmmo);
     }
-    private void OnEnable()
-    {
-        _weapon.OnWasteAmmunition += UpdateCounter;
-    }
-    private void OnDisable()
-    {
-        _weapon.OnWasteAmmunition -= UpdateCounter;
-    }
-
+   
     public void UpdateCounter(int value)
     {
         _counterText.text = value.ToString();

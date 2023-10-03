@@ -1,9 +1,5 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.InputSystem;
-using UnityEngine.UI;
 using Zenject;
 
 public class Player : Entity , IDamageable
@@ -15,20 +11,23 @@ public class Player : Entity , IDamageable
     private Vector2 _moveInput;
     private Rigidbody2D _rb;
     private bool facingRight = true;
+    private bool isDead = false;
     private Weapon _weapon;
 
     private Canvas _canvas;
     private Inventory _inventory;
     private SaveSystem _saveSystem;
+    private AmmoCounter _ammoCounter;
 
-    
+    public event Action OnPlayerDie;
 
     [Inject]
-    private void Construct(Canvas canvas, SaveSystem saveSystem, Inventory inventory)
+    private void Construct(Canvas canvas, SaveSystem saveSystem, Inventory inventory, AmmoCounter ammoCounter)
     {
         _canvas = canvas;   
         _saveSystem = saveSystem;
         _inventory = inventory; 
+        _ammoCounter = ammoCounter; 
     }
 
     private void Awake()
@@ -48,7 +47,7 @@ public class Player : Entity , IDamageable
     }
     public void StopAttack()
     {
-        _weapon.StopAttack();
+        _weapon.PauseAttack();
     }
 
     private void OnEnable()
@@ -69,10 +68,10 @@ public class Player : Entity , IDamageable
         if (playerStats != null)
         {            
             _currentHealth = playerStats.Health;
-            _weapon.AmountAmmo = playerStats.AmountAmmo;
+            _weapon.CurrentAmountAmmo = playerStats.AmountAmmo;
             _speedMovement = playerStats.SpeedMovement;
             _gameplayCanvas.ChangeHealth(CurrentHealth);
-            _weapon.OnWasteAmmunition(_weapon.AmountAmmo);           
+            _ammoCounter.UpdateCounter(_weapon.CurrentAmountAmmo);           
         }
     }
     private void OnDestroy()
@@ -86,7 +85,7 @@ public class Player : Entity , IDamageable
         {
             Health = _currentHealth,
             SpeedMovement = _speedMovement,
-            AmountAmmo = _weapon.AmountAmmo          
+            AmountAmmo = _weapon.CurrentAmountAmmo          
             
         };      
         _saveSystem.Save("player_data", playerData, (success) =>
@@ -105,17 +104,14 @@ public class Player : Entity , IDamageable
         float vertical = _moveInput.y;
 
         if (horizontal > 0 && !facingRight || horizontal < 0 && facingRight)
-        {
-            Flip();
-        }       
-        Vector2 movement = new Vector2(horizontal, vertical).normalized * _speedMovement;
-
-        _rb.velocity = movement * Time.deltaTime;
+             Flip();
+               
+        Vector2 movement = new Vector2(horizontal, vertical).normalized * _speedMovement * Time.deltaTime;
+        _rb.velocity = movement ;
     }
     private void Flip()
     {
         facingRight = !facingRight;
-
         FlipObject(transform);
         FlipObject(_gameplayCanvas.transform);
     }
@@ -128,13 +124,14 @@ public class Player : Entity , IDamageable
 
     protected override void Die()
     {
-        StopAttack();       
+        _weapon.StopAttack();
+        isDead = true;
+        OnPlayerDie?.Invoke();
     }
 
     private Enemy EnemyDetector()
     {
         Collider2D[] colliders = Physics2D.OverlapCircleAll(transform.position, _detectionRadius, _enemyLayer);
-
         foreach (Collider2D collider in colliders)
         {
             Enemy enemy = collider.GetComponent<Enemy>();
@@ -154,8 +151,20 @@ public class Player : Entity , IDamageable
             _inventory.AddItem(item);
         }
     }
-    private void Update()
+
+    public void RestartPlayer()
     {
-        Move();             
+        _currentHealth = _maxHealth;
+        _gameplayCanvas.ChangeHealth(MaxHealth);  
+        _weapon.CurrentAmountAmmo = _weapon.MaxAmountAmmo;
+        _weapon.canDoAction = true;
+        isDead = false;
+        _ammoCounter.UpdateCounter(_weapon.MaxAmountAmmo);        
+    }
+
+    private void FixedUpdate()
+    {  
+        if(!isDead)
+            Move();             
     }
 }
