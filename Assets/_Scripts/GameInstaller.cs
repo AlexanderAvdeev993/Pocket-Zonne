@@ -5,6 +5,7 @@ public class GameInstaller : MonoInstaller
 {
     [SerializeField] private Player player;
     [SerializeField] private Canvas canvas;
+    [SerializeField] private Inventory inventory;
     
     public override void InstallBindings()
     {
@@ -12,6 +13,22 @@ public class GameInstaller : MonoInstaller
         BindEnemyFactory();
         BindCanvas();
         BindItemFactory();
+        BindSaveSystem();
+        BindInventory();
+    }
+    private void BindInventory()
+    {
+        Container.Bind<Inventory>()
+            .FromInstance(inventory)
+            .AsSingle()
+            .NonLazy();
+    }
+    private void BindSaveSystem()
+    {
+        Container.Bind<SaveSystem>()
+            .FromNew()
+            .AsSingle()
+            .NonLazy();
     }
     private void BindCanvas()
     {

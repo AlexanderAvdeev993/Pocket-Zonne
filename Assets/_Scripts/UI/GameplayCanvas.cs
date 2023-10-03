@@ -13,9 +13,8 @@ public class GameplayCanvas : MonoBehaviour
     private void Awake()
     {
         _entity = GetComponentInParent<Entity>();
-        _currentFillAmount = _entity.Health;
-
-        _slider.fillAmount = _currentFillAmount / _entity.Health;
+      
+        _slider.fillAmount = (float)_entity.CurrentHealth / _entity.MaxHealth;
     }
     public void ActiveDetectionZona(bool active)
     {
@@ -38,8 +37,8 @@ public class GameplayCanvas : MonoBehaviour
         _entity.OnTakeDamage -= ChangeHealth;
     }
 
-    private void ChangeHealth(int currentHealth)
-    {
-        _slider.fillAmount = currentHealth / _currentFillAmount;
+    public void ChangeHealth(int currentHealth)
+    {        
+        _slider.fillAmount = (float)currentHealth / _entity.MaxHealth;
     }
 }

@@ -6,7 +6,7 @@ using UnityEngine.InputSystem;
 using UnityEngine.UI;
 using Zenject;
 
-public class Player : Entity
+public class Player : Entity , IDamageable
 {
     [SerializeField] private float _detectionRadius = 5f;
     [SerializeField] private LayerMask _enemyLayer;
@@ -19,29 +19,30 @@ public class Player : Entity
 
     private Canvas _canvas;
     private Inventory _inventory;
+    private SaveSystem _saveSystem;
+
+    
 
     [Inject]
-    private void Construct(Canvas canvas)
+    private void Construct(Canvas canvas, SaveSystem saveSystem, Inventory inventory)
     {
         _canvas = canvas;   
+        _saveSystem = saveSystem;
+        _inventory = inventory; 
     }
 
     private void Awake()
     {    
         _rb = GetComponent<Rigidbody2D>();       
-        _inputSystem = new InputSystem();
-
-        _inventory = _canvas.GetComponentInChildren<Inventory>();
-        
+        _inputSystem = new InputSystem();              
         _weapon = GetComponentInChildren<Weapon>();
         
-
         _inputSystem.Player.Move.performed += context => _moveInput = context.ReadValue<Vector2>();
         _inputSystem.Player.Move.canceled += context => _moveInput = Vector2.zero;
-
-        _gameplayCanvas.InstallationDetectionZona(_detectionRadius);
-    }
-    public void Attack()
+       
+        _gameplayCanvas.InstallationDetectionZona(_detectionRadius);          
+    }    
+    public void Attack() 
     {   
         _weapon.StartAttack(EnemyDetector());
     }
@@ -58,6 +59,46 @@ public class Player : Entity
     {
         _inputSystem.Disable();
     }
+
+    public void LoadPlayerData()
+    {
+        _saveSystem.Load<PlayerData>("player_data", OnPlayerStatsLoaded);
+    }
+    private void OnPlayerStatsLoaded(PlayerData playerStats)
+    {
+        if (playerStats != null)
+        {            
+            _currentHealth = playerStats.Health;
+            _weapon.AmountAmmo = playerStats.AmountAmmo;
+            _speedMovement = playerStats.SpeedMovement;
+            _gameplayCanvas.ChangeHealth(CurrentHealth);
+            _weapon.OnWasteAmmunition(_weapon.AmountAmmo);           
+        }
+    }
+    private void OnDestroy()
+    {      
+        SavePlayerStats();
+    }
+
+    private void SavePlayerStats()
+    {       
+        PlayerData playerData = new PlayerData
+        {
+            Health = _currentHealth,
+            SpeedMovement = _speedMovement,
+            AmountAmmo = _weapon.AmountAmmo          
+            
+        };      
+        _saveSystem.Save("player_data", playerData, (success) =>
+        {
+            if (success)           
+                Debug.Log("player_data saved successfully.");           
+            else            
+                Debug.LogError("Failed to save player_data.");           
+        });
+    }
+
+
     private void Move()
     {                 
         float horizontal = _moveInput.x;
@@ -87,8 +128,7 @@ public class Player : Entity
 
     protected override void Die()
     {
-        StopAttack();
-        base.Die();
+        StopAttack();       
     }
 
     private Enemy EnemyDetector()

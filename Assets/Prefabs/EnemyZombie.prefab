@@ -801,12 +801,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _gameplayCanvas: {fileID: 8419059937181101420}
-  _health: 100
-  _speedMovement: 2
+  _currentHealth: 50
+  _maxHealth: 50
+  _speedMovement: 1
   _detectionRange: 5
   _attackDistance: 2
   _speedAttack: 30
-  _damage: 10
+  _damage: 5
   _itemsForDrops:
   - {fileID: 1897872755, guid: efc306541cb0d9e499252b1efcad91a8, type: 3}
   - {fileID: -1445194418904727669, guid: 0c8d7e509e7fd9f41825fdaa14ac0589, type: 3}

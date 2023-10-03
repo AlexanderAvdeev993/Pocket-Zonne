@@ -12,12 +12,13 @@ public class AmmoCounter : MonoBehaviour
     [Inject]
     private void Construct(Player player)
     {
-        _weapon = player.GetComponentInChildren<Weapon>();
+        _weapon = player.GetComponentInChildren<Weapon>();      
     }
 
     private void Awake()
     {
         _counterText = GetComponentInChildren<TextMeshProUGUI>();
+        UpdateCounter(_weapon.AmountAmmo);
     }
     private void OnEnable()
     {

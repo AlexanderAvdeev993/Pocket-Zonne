@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using Zenject;
 
@@ -9,19 +7,31 @@ public class GameManager : MonoBehaviour
     [SerializeField] private SpawnPoint[] spawnEnemyPoints;
 
     private Player _player;
-     private EnemyFactory _enemyFactory;
+    private EnemyFactory _enemyFactory;
+    private Inventory _inventory;
 
     [Inject]
-    private void Construct(Player player, EnemyFactory enemyFactory)
+    private void Construct(Player player, EnemyFactory enemyFactory, Inventory inventory)
     {
         _player = player;
-        _enemyFactory = enemyFactory;
+        _enemyFactory = enemyFactory;     
+        _inventory = inventory;
     }
 
     private void Start()
     {
+        StartGame();
+    }
+    private void StartGame()
+    {
         ReturnPlayerToStartPos();
         _enemyFactory.CreateEnemy(spawnEnemyPoints);
+        _player.LoadPlayerData();
+        _inventory.LoadInventory();
+    }
+    private void EndGame()
+    {
+
     }
 
     private void ReturnPlayerToStartPos()

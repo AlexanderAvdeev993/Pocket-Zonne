@@ -100,4 +100,4 @@ MonoBehaviour:
   _damage: 5
   _speedAttack: 300
   _amountAmmo: 30
-  _cooldownTime: 0
+  _cooldownTime: 0.5

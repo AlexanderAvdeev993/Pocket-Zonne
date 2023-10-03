@@ -6,17 +6,20 @@ using UnityEngine;
 
 
 
-public class Weapon : MonoBehaviour 
+public class Weapon : MonoBehaviour
 {
     public Action<int> OnWasteAmmunition;
     [SerializeField] private int _damage;
     [SerializeField] private int _speedAttack;
-    [SerializeField] private int _amountAmmo;   
-    private CancellationTokenSource _token;
-
+    [SerializeField] private int _amountAmmo;
     [SerializeField] private float _cooldownTime;
-    private bool canDoAction = true; 
-    
+
+    private CancellationTokenSource _token;
+    private bool canDoAction = true;
+
+    public int AmountAmmo { get => _amountAmmo; set => _amountAmmo = value; }
+
+
     private IEnumerator ICooldown()                          // этой корутиной ограничиваю количество вызовов атаки в секунду
     {
         canDoAction = false;
@@ -42,10 +45,10 @@ public class Weapon : MonoBehaviour
             {
                 StopAttack();
                 return;
-            }
-           
-            _amountAmmo--;
+            }             
+            _amountAmmo--;          
             OnWasteAmmunition?.Invoke(_amountAmmo);
+
             nearestTarget.TakeDamage(_damage);
 
             await UniTask.Delay(TimeSpan.FromMinutes(ShotDelay(_speedAttack)), cancellationToken: _token.Token)

@@ -20,7 +20,7 @@ public class DeleteItemMenu : MonoBehaviour
     }
     public void UpdateText()
     {
-        _textMenuDelete.text = "Delete " + _slot.item.name;
+        _textMenuDelete.text = "Delete " + _slot.Item.name;
     }
 
     private void DeleteItem()
@@ -33,7 +33,4 @@ public class DeleteItemMenu : MonoBehaviour
     {
         gameObject.SetActive(false);
     }
-
-
-
 }

@@ -677,7 +677,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _gameplayCanvas: {fileID: 9025766233529370136}
-  _health: 100
+  _currentHealth: 100
+  _maxHealth: 100
   _speedMovement: 100
   _detectionRadius: 5
   _enemyLayer:
@@ -903,7 +904,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2769137003521501156, guid: 34e2e74a72b8ac843b20c62a12344d78, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 2.21
+      value: 3.25
       objectReference: {fileID: 0}
     - target: {fileID: 2769137003521501156, guid: 34e2e74a72b8ac843b20c62a12344d78, type: 3}
       propertyPath: m_SizeDelta.y

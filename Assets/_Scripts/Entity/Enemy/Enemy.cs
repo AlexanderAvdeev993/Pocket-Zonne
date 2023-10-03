@@ -91,10 +91,10 @@ public class Enemy : Entity
 
     protected override void Die()
     {
+        Debug.Log("1");
         _itemFactory.DropItem(_itemsForDrops, gameObject.transform.position);
         _token?.Cancel();
-        gameObject.SetActive(false);      
-        base.Die();
+        gameObject.SetActive(false);             
     }
 
     private double AttackDelay(float speedAttack)

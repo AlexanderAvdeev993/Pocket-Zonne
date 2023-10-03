@@ -5,29 +5,32 @@ using UnityEngine.UI;
 
 public class Slot : MonoBehaviour
 {
-    public Item item { get;  set; }
-    public int amount;
-    public DeleteItemMenu _deleteItemMenu;
-
-    public bool isEmpty = true;
-    private Image slotImage;
-    private Button _button;
+    [SerializeField] private Button _button;
+    [SerializeField] private DeleteItemMenu _deleteItemMenu;
+    [SerializeField] private Item _item;  
+    [SerializeField] private Image _slotImage;
+    [SerializeField] private int _amount;
+    [SerializeField] private TextMeshProUGUI _amountText;
+    [SerializeField] private bool _isEmpty = true;
     private Sprite _spriteDefoult;
-    public TextMeshProUGUI _amountText;
-   
-   
+    
+    public Item Item { get => _item; set => _item = value; }
+    public int Amount { get => _amount; set => _amount = value; }
+    public bool IsEmpty { get => _isEmpty; set => _isEmpty = value; }
+    public TextMeshProUGUI AmountText { get => _amountText; set => _amountText = value; }
+
 
     private void Awake()
     {
-        slotImage = GetComponent<Image>();
-        _spriteDefoult = slotImage.sprite;
+        _slotImage = GetComponent<Image>();
+        _spriteDefoult = _slotImage.sprite;
         _button = GetComponent<Button>();
 
         _button.onClick.AddListener(OpenDeleteItemMenu);
     }
     private void OpenDeleteItemMenu()
     {
-        if (isEmpty) return;
+        if (_isEmpty) return;
 
         _deleteItemMenu.gameObject.SetActive(true);       
         _deleteItemMenu._slot = this;
@@ -35,14 +38,14 @@ public class Slot : MonoBehaviour
     }
     public void DeleteItem()
     {
-        item = null;
-        amount = 0;
-        isEmpty = true;
-        slotImage.sprite = _spriteDefoult;
+        _item = null;
+        _amount = 0;
+        _isEmpty = true;
+        _slotImage.sprite = _spriteDefoult;
         _amountText.text = "";
     }
     public void ChangeSprite(Sprite sprite)
     {
-        slotImage.sprite = sprite;
+        _slotImage.sprite = sprite;
     }
 }
