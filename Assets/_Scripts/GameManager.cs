@@ -28,7 +28,6 @@ public class GameManager : MonoBehaviour
     private void Start()
     {
         _playerDieMenu = _canvas.GetComponent<PlayerDieMenu>();
-        //_playerDieMenu.RestartButton.onClick.AddListener(StartNewGame);
         _button.onClick.AddListener(StartNewGame);
 
         StartGame(); 
@@ -45,7 +44,7 @@ public class GameManager : MonoBehaviour
         ReturnPlayerToStartPos();
         _player.RestartPlayer();
         _playerDieMenu.GameObjectFalse();
-
+        _inventory.InventoryCleaning();
         _enemyFactory.RespawnEnemy();
     }   
 

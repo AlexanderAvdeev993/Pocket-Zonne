@@ -108,6 +108,13 @@ public class Inventory : MonoBehaviour
     {
         SaveInventory();
     }
+    public void InventoryCleaning()
+    {
+        foreach (var slot in slots)
+        {
+            slot.DeleteItem();
+        }
+    }
 
     public void AddItem(Item item)
     {

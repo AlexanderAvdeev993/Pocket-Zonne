@@ -92,14 +92,21 @@ public class Enemy : Entity
     }
 
     protected override void Die()
-    {
-        Debug.Log("1");
+    {       
         _itemFactory.DropItem(_itemsForDrops, gameObject.transform.position);
         _token?.Cancel();
         OnEnemyDie?.Invoke(this);
         gameObject.SetActive(false);             
     }
 
+    public void RespawnEnemy()
+    {   
+        CurrentHealth = MaxHealth;
+        _gameplayCanvas.ChangeHealth(MaxHealth);
+        _token?.Cancel();
+        isStartAttack = false;
+    }
+  
     private double AttackDelay(float speedAttack)
     {
         return 1 / speedAttack;

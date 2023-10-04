@@ -779,8 +779,8 @@ Rigidbody2D:
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
-  m_Mass: 1
-  m_LinearDrag: 0
+  m_Mass: 70
+  m_LinearDrag: 1
   m_AngularDrag: 0
   m_GravityScale: 0
   m_Material: {fileID: 0}
@@ -801,13 +801,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _gameplayCanvas: {fileID: 8419059937181101420}
-  _currentHealth: 50
-  _maxHealth: 50
+  _currentHealth: 25
+  _maxHealth: 25
   _speedMovement: 1
   _detectionRange: 5
   _attackDistance: 2
   _speedAttack: 30
-  _damage: 5
+  _damage: 20
   _itemsForDrops:
   - {fileID: 1897872755, guid: efc306541cb0d9e499252b1efcad91a8, type: 3}
   - {fileID: -1445194418904727669, guid: 0c8d7e509e7fd9f41825fdaa14ac0589, type: 3}

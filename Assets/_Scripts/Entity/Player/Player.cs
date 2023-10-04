@@ -80,21 +80,24 @@ public class Player : Entity , IDamageable
     }
 
     private void SavePlayerStats()
-    {       
-        PlayerData playerData = new PlayerData
+    {   
+        if(CurrentHealth > 0)
         {
-            Health = _currentHealth,
-            SpeedMovement = _speedMovement,
-            AmountAmmo = _weapon.CurrentAmountAmmo          
-            
-        };      
-        _saveSystem.Save("player_data", playerData, (success) =>
-        {
-            if (success)           
-                Debug.Log("player_data saved successfully.");           
-            else            
-                Debug.LogError("Failed to save player_data.");           
-        });
+            PlayerData playerData = new PlayerData
+            {
+                Health = _currentHealth,
+                SpeedMovement = _speedMovement,
+                AmountAmmo = _weapon.CurrentAmountAmmo
+
+            };
+            _saveSystem.Save("player_data", playerData, (success) =>
+            {
+                if (success)
+                    Debug.Log("player_data saved successfully.");
+                else
+                    Debug.LogError("Failed to save player_data.");
+            });
+        }        
     }
 
 

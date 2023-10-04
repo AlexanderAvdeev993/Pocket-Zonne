@@ -49,6 +49,8 @@ public class EnemyFactory
         foreach(Enemy enemy in enemyList)
         {
             enemy.gameObject.SetActive(true);
+            enemy.RespawnEnemy();
+
         }
     }
 
