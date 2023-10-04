@@ -86,8 +86,7 @@ public class Enemy : Entity
 
     private void Attack()
     {       
-        if (_player == null) return;
-        Debug.Log("Attack melle");
+        if (_player == null) return;        
         _player.TakeDamage(_damage);
     }
 
@@ -133,7 +132,7 @@ public class Enemy : Entity
         {   
             isStartAttack = true;
             MoveToTargen().Forget();
-            Debug.Log("Start Attack");
+            Debug.Log("Start Zombee Attack");
         }
     }
 }

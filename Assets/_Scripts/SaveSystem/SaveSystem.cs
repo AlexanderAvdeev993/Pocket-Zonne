@@ -39,7 +39,6 @@ public class SaveSystem : ISaveSystem
 
     private string BuildPath(string key)
     {
-        Debug.Log(Application.persistentDataPath);
         return Path.Combine(Application.persistentDataPath, key);       
     }
 }
