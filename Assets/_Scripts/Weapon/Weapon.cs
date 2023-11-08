@@ -12,6 +12,8 @@ public class Weapon : MonoBehaviour
     [SerializeField] private int _currentAmountAmmo;
     [SerializeField] private int _maxAmountAmmo;
     [SerializeField] private float _cooldownTime;
+    [SerializeField] private GameObject _shotEffect;
+    [SerializeField] private float _shotEffectDelay;
 
     private CancellationTokenSource _token;
     private AmmoCounter _ammoCounter;
@@ -39,10 +41,15 @@ public class Weapon : MonoBehaviour
         canDoAction = true;
     }
 
+    private IEnumerator ShotEffect()
+    {
+        _shotEffect.SetActive(true);
+        yield return new WaitForSeconds(_shotEffectDelay);
+        _shotEffect.SetActive(false);
+    }
 
     public void StartAttack(Entity nearestTarget)
-    {
-       
+    {       
         if (canDoAction)
         {          
             StartCoroutine(ICooldown());
@@ -63,12 +70,16 @@ public class Weapon : MonoBehaviour
             _currentAmountAmmo--;
             _ammoCounter.UpdateCounter(_currentAmountAmmo);
 
+            StartCoroutine(ShotEffect());
+
             nearestTarget.TakeDamage(_damage);
 
             await UniTask.Delay(TimeSpan.FromMinutes(ShotDelay(_speedAttack)), cancellationToken: _token.Token)
                                         .SuppressCancellationThrow();                                                        
         }
     }
+
+    
     public void StopAttack()
     {
         _token?.Cancel();

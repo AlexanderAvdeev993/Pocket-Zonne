@@ -6,6 +6,7 @@ public class Player : Entity , IDamageable
 {
     [SerializeField] private float _detectionRadius = 5f;
     [SerializeField] private LayerMask _enemyLayer;
+    private Animator _animator;
 
     private InputSystem _inputSystem;
     private Vector2 _moveInput;
@@ -35,6 +36,7 @@ public class Player : Entity , IDamageable
         _rb = GetComponent<Rigidbody2D>();       
         _inputSystem = new InputSystem();              
         _weapon = GetComponentInChildren<Weapon>();
+        _animator = GetComponent<Animator>();   
         
         _inputSystem.Player.Move.performed += context => _moveInput = context.ReadValue<Vector2>();
         _inputSystem.Player.Move.canceled += context => _moveInput = Vector2.zero;
@@ -108,9 +110,11 @@ public class Player : Entity , IDamageable
 
         if (horizontal > 0 && !facingRight || horizontal < 0 && facingRight)
              Flip();
-               
+
         Vector2 movement = new Vector2(horizontal, vertical).normalized * _speedMovement * Time.deltaTime;
-        _rb.velocity = movement ;
+
+        _animator.SetBool("IsWalking", movement.magnitude > 0);
+        _rb.velocity = movement;        
     }
     private void Flip()
     {

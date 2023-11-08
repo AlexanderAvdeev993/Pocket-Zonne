@@ -21,6 +21,7 @@ public class Enemy : Entity
     private bool isStartAttack = false;
     private bool facingRight = true;
     private ItemFactory _itemFactory;
+    private Animator _animator;
     
     public event Action<Enemy> OnEnemyDie;
 
@@ -32,7 +33,8 @@ public class Enemy : Entity
     }
 
     private void Awake()
-    {
+    {   
+        _animator = GetComponent<Animator>();
         _rb = GetComponent<Rigidbody2D>();
         _gameplayCanvas.ActiveDetectionZona(false);
     }
@@ -46,6 +48,8 @@ public class Enemy : Entity
             if(!isAttack)
             {
                 Vector2 direction = (_player.transform.position - transform.position).normalized;
+
+                _animator.SetBool("IsWalking", direction.magnitude > 0);
                 _rb.velocity = direction * _speedMovement;
 
                 if (direction.x > 0 && !facingRight || direction.x < 0 && facingRight)              
